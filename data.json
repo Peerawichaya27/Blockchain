@@ -1,0 +1,11 @@
+{
+    "student_id": "123456789",
+    "acl": {
+        "email": "example@example.com",
+        "selective_disclosure": ["religion", "sex"],
+        "expiration_time": "2024-09-22T12:00:00",
+        "max_verifiers": 3
+    },
+    "validity": "2024-09-22T12:00:00",
+    "employer_attribute": "XYZ Corporation"
+}
