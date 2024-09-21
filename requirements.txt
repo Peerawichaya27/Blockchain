@@ -20,6 +20,7 @@ eth-typing==5.0.0
 eth-utils==5.0.0
 eth_abi==5.1.0
 Flask==3.0.3
+fpdf==1.7.2
 frozenlist==1.4.1
 hexbytes==1.2.1
 idna==3.10
@@ -35,12 +36,14 @@ pycryptodome==3.20.0
 pydantic==2.9.2
 pydantic_core==2.23.4
 pypng==0.20220715.0
+python-dateutil==2.9.0.post0
 pyunormalize==16.0.0
 pywin32==306
 qrcode==7.4.2
 regex==2024.9.11
 requests==2.32.3
 rlp==4.0.1
+six==1.16.0
 toolz==0.12.1
 types-requests==2.32.0.20240914
 typing_extensions==4.12.2
