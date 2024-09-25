@@ -44,19 +44,18 @@ def update_acl():
     # Get the current date + 2 days as expiration time and update it in the ACL
     new_expiration_time = get_expiration_time()
     data['acl']['expiration_time'] = new_expiration_time
-    data['validity'] = new_expiration_time
 
     # Save the updated data.json file
     with open('data.json', 'w') as file:
         json.dump(data, file, indent=4)
 
     # Trigger the /register-transcript endpoint from uni.py
-    register_response = requests.get('http://0.0.0.0:5000/register-transcript')
+    register_response = requests.get('http://192.168.1.154:5000/register-transcript')
 
     # If the transcript registration was successful, generate the QR code
     if register_response.status_code == 200:
         # Now trigger the /generate-token endpoint from uni.py
-        generate_response = requests.get('http://0.0.0.0:5000/generate-token')
+        generate_response = requests.get('http://192.168.1.154:5000/generate-token')
         if generate_response.status_code == 200:
             qr_code_url = generate_response.json().get("credentials_url")
             return render_template('qr_code.html', qr_code_url=qr_code_url)
