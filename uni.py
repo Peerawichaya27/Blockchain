@@ -121,7 +121,7 @@ def generate_token():
     token_json = json.dumps(token_data)
 
     # Generate the URL to input-credentials endpoint with the token data
-    credentials_url = f"http://192.168.1.154:5000/input-credentials?token={token_json}"
+    credentials_url = f"http://127.0.0.1:5000/input-credentials?token={token_json}"
 
     # Generate QR code from the URL with the token
     qr = qrcode.make(credentials_url)
@@ -207,4 +207,4 @@ def verify_token():
         return render_template('result.html', message="Verification failed")
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.154', port=5000, debug=True)  # Replace with your actual local IP
+    app.run(host='127.0.0.1', port=5000, debug=True)  # Replace with your actual local IP

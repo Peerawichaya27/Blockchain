@@ -50,12 +50,12 @@ def update_acl():
         json.dump(data, file, indent=4)
 
     # Trigger the /register-transcript endpoint from uni.py
-    register_response = requests.get('http://192.168.1.154:5000/register-transcript')
+    register_response = requests.get('http://127.0.0.1:5000/register-transcript')
 
     # If the transcript registration was successful, generate the QR code
     if register_response.status_code == 200:
         # Now trigger the /generate-token endpoint from uni.py
-        generate_response = requests.get('http://192.168.1.154:5000/generate-token')
+        generate_response = requests.get('http://127.0.0.1:5000/generate-token')
         if generate_response.status_code == 200:
             qr_code_url = generate_response.json().get("credentials_url")
             return render_template('qr_code.html', qr_code_url=qr_code_url)
