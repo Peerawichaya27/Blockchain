@@ -1,0 +1,8 @@
+{
+    "student_did": "0x1234567890abcdef1234567890abcdef12345678",
+    "employer_hashed_email": "aa5fade01a134b3c8da9349711ed98bfcba5c62cb0ab16379b599e896d7775e9",
+    "acl_link": "http://localhost:5000/verify?did=0x1234567890abcdef1234567890abcdef12345678",
+    "expiration": 1687581600,
+    "isValid": true
+  }
+  

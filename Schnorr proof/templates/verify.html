@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schnorr Proof Verification</title>
+    <script>
+        async function submitSchnorrProof(event) {
+            event.preventDefault(); // Prevent default form submission
+            const secret = document.getElementById('secret').value;
+            const studentDid = document.getElementById('student_did').value;
+
+            const response = await fetch('/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `secret=${secret}&student_did=${studentDid}`
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = result.message;
+        }
+    </script>
+</head>
+<body>
+
+<h2>Employer Schnorr Proof Verification</h2>
+<form id="schnorrForm" onsubmit="submitSchnorrProof(event)">
+    <label for="secret">Employer's Secret (Hashed Email):</label><br>
+    <input type="text" id="secret" name="secret" required><br><br>
+
+    <!-- Hidden input field to store the student DID -->
+    <input type="hidden" id="student_did" name="student_did" value="{{ student_did }}">
+
+    <button type="submit">Submit Proof</button>
+</form>
+
+<p id="result"></p>
+
+</body>
+</html>
