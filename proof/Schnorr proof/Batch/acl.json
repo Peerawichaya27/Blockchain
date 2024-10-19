@@ -1,0 +1,25 @@
+{
+  "students": [
+    {
+      "student_did": "0x1234567890abcdef1234567890abcdef12345678",
+      "employer_hashed_email": "f54f9d4e74651ee192d3f6b8ec424673d3d032e0dcd58b72f2f6885ad435f74c",
+      "acl_link": "http://localhost:5000/verify?did=0x1234567890abcdef1234567890abcdef12345678",
+      "expiration": 1687581600,
+      "isValid": true
+    },
+    {
+      "student_did": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "employer_hashed_email": "362fb47d87a6de1f4946f6c1550eb0f2aba56fca0013be1a3095a9c74fee4bda",
+      "acl_link": "http://localhost:5000/verify?did=0xabcdef1234567890abcdef1234567890abcdef12",
+      "expiration": 1687581700,
+      "isValid": true
+    },
+    {
+      "student_did": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+      "employer_hashed_email": "e2fe3045a3d9d75ddc1fa9114431d31dc79875d13e62e529c56cd42bf52d2180",
+      "acl_link": "http://localhost:5000/verify?did=0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+      "expiration": 1687581800,
+      "isValid": true
+    }
+  ]
+}

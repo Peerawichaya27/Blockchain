@@ -1,0 +1,2 @@
+Batch Verification:
+    Batch Schnorr proofs verified successfully Verification Time: 1.168292760848999 seconds
