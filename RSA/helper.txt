@@ -1,0 +1,20 @@
+uni.py -> account address
+abi.json -> contract address
+
+
+truffle:
+	npm install -g truffle				# install truffle
+
+	mkdir e-transcript				# create folder for smart contract
+	cd e-transcript					# cd to that folder
+	truffle init					# set up default for truffle
+
+	2_deploy_contracts.js				# create deploy file in "migrations" folder
+	truffle compile					# compile the solidity
+	
+	truffle migrate --network development		# migrate or deploy the smart contract onto the blockchain
+	truffle migrate --reset --network development	# reset the migration. Use when migrate again.
+
+	truffle console --network development		# open truffle console or terminal
+	
+	ETranscript deployed at address: 0xYourContractAddress	#

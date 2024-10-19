@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Signature</title>
+    <script>
+        async function submitSignature(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const message = document.getElementById('message').value;
+            const signature = document.getElementById('signature').value;
+            const publicKey = document.getElementById('public_key').value;
+            const employerAddress = document.getElementById('employer_address').value;
+
+            const response = await fetch('/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `message=${message}&signature=${signature}&public_key=${publicKey}&employer_address=${employerAddress}`
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = result.message + 
+                " (Verification Time: " + result.verification_time + " seconds)";
+        }
+    </script>
+</head>
+<body>
+
+<h2>Employer Signature Verification</h2>
+<form id="signatureForm" onsubmit="submitSignature(event)">
+    <label for="message">Message (Email or Unique Identifier):</label><br>
+    <input type="text" id="message" name="message" required><br><br>
+
+    <label for="signature">Signature (Hex format):</label><br>
+    <input type="text" id="signature" name="signature" required><br><br>
+
+    <label for="public_key">Public Key (Hex format):</label><br>
+    <input type="text" id="public_key" name="public_key" required><br><br>
+
+    <label for="employer_address">Employer Ethereum Address:</label><br>
+    <input type="text" id="employer_address" name="employer_address" required><br><br>
+
+    <button type="submit">Submit Signature</button>
+</form>
+
+<p id="result"></p>
+
+</body>
+</html>
