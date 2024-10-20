@@ -68,12 +68,12 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
-     from: "0xe534ce9cCF09d30b29B2A7D6D6FCFB5A5DFdf906", // Address of the account you want to use
-     gas: 6721975,        // Gas limit
+     from: "0xDA55918d459895cbAf6a059Fdc4c66509c0931Ee", // Address of the account you want to use
+     gas: 2000000000,        // Gas limit
      gasPrice: 20000000000
     },
     //
-    // An additional network, but with some advanced options…
+    // // An additional network, but with some advanced options…
     // advanced: {
     //   port: 8777,             // Custom port
     //   network_id: 1342,       // Custom network
