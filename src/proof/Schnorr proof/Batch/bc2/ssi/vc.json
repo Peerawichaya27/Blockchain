@@ -1,0 +1,23 @@
+{
+  "@context": [
+      "https://www.w3.org/2018/credentials/v1"
+  ],
+  "id": "http://university.edu/credentials/student-credential-123",
+  "type": [
+      "VerifiableCredential",
+      "StudentCredential"
+  ],
+  "issuer": "did:university:issuer123",
+  "issuanceDate": "2024-09-25T19:23:24Z",
+  "credentialSubject": {
+      "id": "did:university:student1",
+      "name": "John Doe"
+  },
+  "proof": {
+      "type": "Ed25519Signature2020",
+      "created": "2024-09-25T20:10:10Z",
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:university:issuer123#key-1",
+      "jws": "eyJhbGciOiJFZERTQSJ9.eyJAY29udGV4dCI6IFsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiXSwgImlkIjogImh0dHA6Ly91bml2ZXJzaXR5LmVkdS9jcmVkZW50aWFscy9zdHVkZW50LWNyZWRlbnRpYWwtMTIzIiwgInR5cGUiOiBbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwgIlN0dWRlbnRDcmVkZW50aWFsIl0sICJpc3N1ZXIiOiAiZGlkOnVuaXZlcnNpdHk6aXNzdWVyMTIzIiwgImlzc3VhbmNlRGF0ZSI6ICIyMDI0LTA5LTI1VDE5OjIzOjI0WiIsICJjcmVkZW50aWFsU3ViamVjdCI6IHsiaWQiOiAiZGlkOnVuaXZlcnNpdHk6c3R1ZGVudDEyMyIsICJuYW1lIjogIkpvaG4gRG9lIn19.Nnc447eCRJgDmUMpHC3FS6F6xoX4HITi79V9pDPwBnVb096Xh2xxjmdgLN4GFjOMX8jcU5BLsg3UcfAnKbWZCw"
+  }
+}

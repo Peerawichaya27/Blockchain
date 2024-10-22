@@ -1,0 +1,8 @@
+Now, I want the token.json to store only one proof. The token.json will sent to verify on the blockchain. 
+The proof will verify first, which the employer will generate the proof and then compare with the proof in the token.json. 
+If the proof is verified, the blockchain then extract the hashed VC from VP that stored in the token.json. 
+The blockchain then take the student's DID from the token.json and find the index that linked by that student's DID, 
+which the student's DID linked with index of the hashed VC that stored in the ipfs.json will be stored onto the blockchain at first. 
+The blockchain then use that index to retrieve the hashed VC from the ipfs.json. 
+After that, the blockchain will compared the hashed VC retrieved from the VP with the hashed VC retrieved from the ipfs.json. 
+If the hashed VC matched, it will return VC valid to the employer.

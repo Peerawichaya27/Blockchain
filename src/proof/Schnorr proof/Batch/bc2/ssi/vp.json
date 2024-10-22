@@ -1,0 +1,41 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "type": "VerifiablePresentation",
+    "verifiableCredential": [
+        {
+            "hash": "6d282466dcbac8ca391ac41e537c8dd7c111aab7806eff6dbbfbed137b2ca74f",
+            "@context": [
+                "https://www.w3.org/2018/credentials/v1"
+            ],
+            "id": "http://university.edu/credentials/student-credential-123",
+            "type": [
+                "VerifiableCredential",
+                "StudentCredential"
+            ],
+            "issuer": "did:university:issuer123",
+            "issuanceDate": "2024-09-25T19:23:24Z",
+            "credentialSubject": {
+                "id": "did:university:student1",
+                "name": "John Doe"
+            },
+            "proof": {
+                "type": "Ed25519Signature2020",
+                "created": "2024-09-25T20:10:10Z",
+                "proofPurpose": "assertionMethod",
+                "verificationMethod": "did:university:issuer123#key-1",
+                "jws": "eyJhbGciOiJFZERTQSJ9.eyJAY29udGV4dCI6IFsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiXSwgImlkIjogImh0dHA6Ly91bml2ZXJzaXR5LmVkdS9jcmVkZW50aWFscy9zdHVkZW50LWNyZWRlbnRpYWwtMTIzIiwgInR5cGUiOiBbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwgIlN0dWRlbnRDcmVkZW50aWFsIl0sICJpc3N1ZXIiOiAiZGlkOnVuaXZlcnNpdHk6aXNzdWVyMTIzIiwgImlzc3VhbmNlRGF0ZSI6ICIyMDI0LTA5LTI1VDE5OjIzOjI0WiIsICJjcmVkZW50aWFsU3ViamVjdCI6IHsiaWQiOiAiZGlkOnVuaXZlcnNpdHk6c3R1ZGVudDEyMyIsICJuYW1lIjogIkpvaG4gRG9lIn19.Nnc447eCRJgDmUMpHC3FS6F6xoX4HITi79V9pDPwBnVb096Xh2xxjmdgLN4GFjOMX8jcU5BLsg3UcfAnKbWZCw"
+            }
+        }
+    ],
+    "proof": {
+        "type": "Ed25519Signature2020",
+        "created": "2024-09-28T23:51:46+0700",
+        "proofPurpose": "authentication",
+        "verificationMethod": "did:university:student123#key-1",
+        "challenge": "1f44d55f-f161-4938-a659-f8026467f126",
+        "domain": "university.edu",
+        "jws": "eyJhbGciOiJFZERTQSJ9.eyJAY29udGV4dCI6IFsiaHR0cHM6Ly93d3cudzMub3JnLzIwMTgvY3JlZGVudGlhbHMvdjEiXSwgInR5cGUiOiAiVmVyaWZpYWJsZVByZXNlbnRhdGlvbiIsICJ2ZXJpZmlhYmxlQ3JlZGVudGlhbCI6IFtudWxsXSwgInByb29mIjogeyJ0eXBlIjogIkVkMjU1MTlTaWduYXR1cmUyMDIwIiwgImNyZWF0ZWQiOiAiMjAyNC0wOS0yOFQyMzo1MTo0NiswNzAwIiwgInByb29mUHVycG9zZSI6ICJhdXRoZW50aWNhdGlvbiIsICJ2ZXJpZmljYXRpb25NZXRob2QiOiAiZGlkOnVuaXZlcnNpdHk6c3R1ZGVudDEyMyNrZXktMSIsICJjaGFsbGVuZ2UiOiAiMWY0NGQ1NWYtZjE2MS00OTM4LWE2NTktZjgwMjY0NjdmMTI2IiwgImRvbWFpbiI6ICJ1bml2ZXJzaXR5LmVkdSJ9fQ.oM3cSTmQ_JgkBztWzk9KwZZHX8LMoNIgn2_ozfkKvYMOyqJYBpYQidGd1f6gpptt2qtVosdU9ZMECMl_RWbTAQ"
+    }
+}
