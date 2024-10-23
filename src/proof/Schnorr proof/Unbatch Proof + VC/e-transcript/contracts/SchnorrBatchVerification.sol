@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract SchnorrBatchVerification {
-
     mapping(string => bool) public schnorrProofVerified;
     mapping(string => uint256) public didToIndex;
 
@@ -24,13 +23,15 @@ contract SchnorrBatchVerification {
         return uint256(keccak256(abi.encodePacked(R, block.timestamp))) % 23;
     }
 
+    // Separate function to verify only Schnorr proof
     function verifySchnorrProof(
         uint256 R, 
         uint256 s, 
         uint256 g, 
         uint256 p, 
         uint256 c, 
-        string memory employerHashedEmail
+        string memory employerHashedEmail,
+        string memory studentDid
     ) public returns (bool) {
         uint256 lhs = modExp(g, s, p);
         uint256 rhs = calculateRHS(R, g, c, employerHashedEmail, p);
@@ -39,6 +40,8 @@ contract SchnorrBatchVerification {
 
         require(lhs == rhs, "Schnorr proof failed");
 
+        // Mark the Schnorr proof as verified for this student
+        schnorrProofVerified[studentDid] = true;
         return true;
     }
 
@@ -47,40 +50,20 @@ contract SchnorrBatchVerification {
         string memory studentDid, 
         string memory ipfsHashedVC
     ) public view returns (bool) {
+        require(schnorrProofVerified[studentDid], "Schnorr proof not verified yet");
         return keccak256(abi.encodePacked(hashedVCFromVP)) == keccak256(abi.encodePacked(ipfsHashedVC));
     }
 
-    function verify(
-        uint256 R, 
-        uint256 s, 
-        uint256 g, 
-        uint256 p, 
-        uint256 c, 
-        string memory employerHashedEmail, 
-        string memory hashedVCFromVP, 
-        string memory studentDid, 
-        string memory ipfsHashedVC
-    ) public returns (bool) {
-        if (!schnorrProofVerified[studentDid]) {
-            bool schnorrResult = verifySchnorrProof(R, s, g, p, c, employerHashedEmail);
-            require(schnorrResult, "Schnorr proof verification failed.");
-            
-            schnorrProofVerified[studentDid] = true;  // Mark Schnorr proof as verified
-        }
-        
-        bool vcVerified = verifyHashedVC(hashedVCFromVP, studentDid, ipfsHashedVC);
-        require(vcVerified, "Hashed VC verification failed.");
-
-        return true;
-    }
-
+    // Modular exponentiation with gas optimization
     function modExp(uint256 base, uint256 exp, uint256 mod) internal pure returns (uint256) {
         uint256 result = 1;
+        uint256 x = base % mod;
+
         while (exp > 0) {
             if (exp % 2 == 1) {
-                result = (result * base) % mod;
+                result = (result * x) % mod;
             }
-            base = (base * base) % mod;
+            x = (x * x) % mod;
             exp /= 2;
         }
         return result;

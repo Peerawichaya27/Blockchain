@@ -1,11 +1,40 @@
-contract gas = 829,484
-proof gas = 304,492
+contract gas = 728,672
+proof gas = 154,937
 
-Batch Verification Time in Seconds:
-    1 proof = 0.14354228973388672
-    10 proof = 1.2038161754608154
-    50 proof = 5.8958823680877686
-    100 proof = 11.640469074249268
-    250 proof = 29.20596742630005
-    500 proof = 57.93933176994324
-    1000 proof = 116.69795298576355
+Batch Verification Time for Schnorr Proof in Seconds:
+    1 proof = 0.08100223541259766 | 154,937 gas
+    10 proof = 0.6232001781463623 | 1,345,577 gas
+    50 proof = 3.0047926902770996 | 6,645,098 gas
+    100 proof = 5.928539752960205 | 13,252,345 gas
+    250 proof = 14.77185320854187 | 33,081,320 gas
+    500 proof = 29.227423667907715 | 66,164,849 gas
+    1000 proof = 58.51741623878479 | 132,330,626 gas
+
+
+
+
+contract gas = 992,041
+hashed VC gas = 95,536
+
+Batch Verification Time for Merkle Tree in Seconds:
+    1 hashed VC = 0.04000139236450195 | 55,736 gas 
+    10 hashed VC = 0.42615175247192383 | 657,989 gas
+    50 hashed VC = 1.4344513416290283 | 1,642,175 gas
+    100 hashed VC = 2.702176332473755 | 3,380,751 gas
+    250 hashed VC = 6.492004871368408 | 8,759,845 gas
+    500 hashed VC = 13.019126653671265 | 18,122,419 gas
+    1000 hashed VC = 26.382765531539917 | 37,470,803 gas
+
+
+{
+  "status": "success",
+  "total_gas_used_schnorr": 322954,
+  "total_gas_used_vc": 30257,
+  "valid_students": [
+    {
+      "status": "verified and VC valid",
+      "student_did": "did:university:student1"
+    }
+  ],
+  "verification_time": 0.17095375061035156
+}

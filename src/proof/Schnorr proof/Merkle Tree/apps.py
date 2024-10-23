@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Web3 setup
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545", request_kwargs={'timeout': 500}))
-contract_address = Web3.to_checksum_address('0x7941749417f832994179Ba5ddF0b8DfCD11B46b1')  # Replace with your deployed contract address
+contract_address = Web3.to_checksum_address('0x237421b1AbC20B15f8A33aA46135671f6fd0BBd3')  # Replace with your deployed contract address
 
 # Load the contract ABI
 with open('e-transcript/build/contracts/SchnorrBatchVerification.json') as f:
@@ -46,10 +46,11 @@ def store_did_to_index():
 
             # Call the smart contract function to store DID and index
             tx_hash = contract.functions.storeDidToIndex(student_did, student_index).transact({
-                'from': w3.eth.accounts[0], 'gas': 200000000
+                'from': w3.eth.accounts[1], 'gas': 200000000
             })
             # Wait for the transaction to be mined
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+            # print(f"Stored DID: {student_did} with index: {student_index} on the blockchain")
 
         return jsonify({
             "status": "success",
@@ -131,62 +132,26 @@ def batch_verify_from_json():
 
         for student in students_data:
             student_did = student['student_did']
+            student_index = contract.functions.getIndexByDid(student_did).call()
 
-            try:
-                # Retrieve the student's index from the smart contract
-                student_index = contract.functions.getIndexByDid(student_did).call()
+            # Retrieve hashed VC from ipfs.json using the index
+            ipfs_hashed_vc = ipfs_data[str(student_index)]['hashed_vc']  # Get the hashed VC from IPFS data
+            vp_hashed_vc = token_data[str(student_index)]['verifiablePresentation']['verifiableCredential'][0]['hash']  # Get hashed VC from the VP
 
-                # Retrieve hashed VC from ipfs.json using the index
-                ipfs_hashed_vc = ipfs_data.get(str(student_index), {}).get('hashed_vc')
-
-                # Check if 'verifiableCredential' is a list and contains at least one element
-                verifiable_presentation = token_data.get(str(student_index), {}).get('verifiablePresentation', {})
-                if 'verifiableCredential' not in verifiable_presentation or not verifiable_presentation['verifiableCredential']:
-                    invalid_students.append({
-                        "student_did": student['student_did'],
-                        "status": "Missing or invalid verifiableCredential"
-                    })
-                    continue
-                
-                # Retrieve the hashed VC from VP
-                vp_hashed_vc = verifiable_presentation['verifiableCredential'][0].get('hash')
-
-                # If any data is missing, mark the student as invalid
-                if not ipfs_hashed_vc or not vp_hashed_vc:
-                    invalid_students.append({
-                        "student_did": student['student_did'],
-                        "status": "Missing data for hashed VC in either IPFS or VP"
-                    })
-                    continue
-
-                # Compare hashed VC from VP and hashed VC from IPFS
-                if vp_hashed_vc != ipfs_hashed_vc:
-                    invalid_students.append({
-                        "student_did": student['student_did'],
-                        "status": "Hashed VC mismatch"
-                    })
-                    continue  # Skip to the next student
-
-                # Append both hashed VCs to their respective lists
-                hashed_vcs_ipfs.append(ipfs_hashed_vc)
-                hashed_vcs_vp.append(vp_hashed_vc)
-                valid_students.append(student)  # Only valid students are added here
-
-            except (KeyError, IndexError) as e:
+            # Compare hashed VC from VP and hashed VC from IPFS
+            if vp_hashed_vc != ipfs_hashed_vc:
+                # Log invalid student but continue to next
                 invalid_students.append({
                     "student_did": student['student_did'],
-                    "status": f"Error processing student: {str(e)}"
+                    "status": "Hashed VC mismatch"
                 })
-                continue
+                continue  # Skip to the next student
 
-        # If no valid students, return error
-        if not valid_students:
-            return jsonify({
-                "status": "failed",
-                "message": "No valid students to process."
-            })
+            # Append both hashed VCs to their respective lists
+            hashed_vcs_ipfs.append(ipfs_hashed_vc)
+            hashed_vcs_vp.append(vp_hashed_vc)
 
-        # Construct the Merkle Trees only for valid students
+        # Construct the Merkle Trees
         ipfs_merkle_tree = build_merkle_tree(hashed_vcs_ipfs)
         vp_merkle_tree = build_merkle_tree(hashed_vcs_vp)
 
@@ -203,24 +168,40 @@ def batch_verify_from_json():
             ipfs_merkle_root_bytes32, 
             vp_merkle_root_bytes32
         ).transact({
-            'from': w3.eth.accounts[0], 'gas': 200000000
+            'from': w3.eth.accounts[1], 'gas': 200000000
         })
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
 
-        # Generate the Merkle Proof for each valid student
-        for i, student in enumerate(valid_students):
+        # Generate the Merkle Proof for each student
+        for i, student in enumerate(students_data):
             # Get Merkle Proofs from both IPFS and VP trees
+            # merkle_proof_ipfs = get_merkle_proof(ipfs_merkle_tree, i)
             merkle_proof_vp = get_merkle_proof(vp_merkle_tree, i)
+
+            # # Verify IPFS proof on the blockchain
+            # tx_hash = contract.functions.verifyMerkleProof(
+            #     [bytes.fromhex(p) for p in merkle_proof_ipfs], 
+            #     bytes.fromhex(hashed_vcs_ipfs[i])
+            # ).transact({'from': w3.eth.accounts[0], 'gas': 200000000})
+
+            # receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+            # cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
 
             # Verify VP proof on the blockchain
             tx_hash = contract.functions.verifyMerkleProof(
                 [bytes.fromhex(p) for p in merkle_proof_vp], 
                 bytes.fromhex(hashed_vcs_vp[i])
-            ).transact({'from': w3.eth.accounts[0], 'gas': 200000000})
+            ).transact({'from': w3.eth.accounts[1], 'gas': 200000000})
 
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
             cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
+
+            if receipt['status'] == 1:
+                valid_students.append({
+                    "student_did": student['student_did'],
+                    "status": "verified and VC valid"
+                })
 
         verification_time = time.time() - start_time
 

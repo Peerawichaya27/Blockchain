@@ -13,14 +13,17 @@ Batch Verification Time for Schnorr Proof in Seconds:
 
 
 
-contract gas = 947,668
-hashed VC gas = 70,246
+contract gas = 992,041
+hashed VC gas = 95,536
+
+Schnorr Proof gas = 33,864
+Schnorr Proof time = 0.036002397537231445
 
 Batch Verification Time for Merkle Tree in Seconds:
-    1 hashed VC = 0.04399895668029785 | 70,246 gas
-    10 proof = 0.399000883102417 | 339,475 gas
-    50 proof = 1.4344513416290283 | 1,642,175 gas
-    100 proof = 2.702176332473755 | 3,380,751 gas
-    250 proof = 6.492004871368408 | 8,759,845 gas
-    500 proof = 13.019126653671265 | 18,122,419 gas
-    1000 proof = 26.382765531539917 | 37,470,803 gas
+    1 hashed VC = 0.06168675422668457 | 95,536 gas 
+    10 hashed VC = 0.3003823757171631 | 363,239 gas
+    50 hashed VC = 1.0970661640167236 | 1,685,639 gas
+    100 hashed VC = 2.0427236557006836 | 3,427,465 gas
+    250 hashed VC = 5.096817493438721 | 8,816,309 gas
+    500 hashed VC = 11.119999170303345 | 18,195,133 gas
+    1000 hashed VC = 21.735512495040894 | 37,576,017 gas

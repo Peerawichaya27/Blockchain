@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # Web3 setup
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545", request_kwargs={'timeout': 500}))
-contract_address = Web3.to_checksum_address('0x87E42c7c7c8f6f5a5B51BcE3D3cAb5C9AfE68469')  # Replace with your deployed contract address
+contract_address = Web3.to_checksum_address('0x86F78E10E05162b87F59fD6fcF96F986D1fbF125')  # Replace with your deployed contract address
 
 # Load the contract ABI
 with open('e-transcript/build/contracts/SchnorrBatchVerification.json') as f:
@@ -30,7 +30,7 @@ def batch_ver_page():
 
 @app.route('/store', methods=['GET'])
 def store_did_page():
-    # Render the HTML form page for batch verification
+    # Render the HTML form page for storing DIDs
     return render_template('store_did.html')
 
 @app.route('/store_did_to_index', methods=['POST'])
@@ -66,7 +66,6 @@ def store_did_to_index():
 
 @app.route('/batch_verify_json', methods=['POST'])
 def batch_verify_from_json():
-    global proof_verified  # Mark this as global to track it across requests
     try:
         # Load the necessary data
         with open('batch_verification_payload.json', 'r') as f:
@@ -80,37 +79,43 @@ def batch_verify_from_json():
 
         valid_students = []
         start_time = time.time()
+        total_gas_used_schnorr = 0
+        total_gas_used_vc = 0
 
         for student in students_data:
             student_did = student['student_did']
             student_index = contract.functions.getIndexByDid(student_did).call()
             ipfs_vc = ipfs_data[str(student_index)]['hashed_vc']
 
-            if not proof_verified:
-                # First-time verification, perform Schnorr proof and VC verification
-                hashed_email = hashlib.sha256(student['email'].encode()).hexdigest()
-                r = random.randint(1, P-1)
-                R = pow(G, r, P)
-                challenge = contract.functions.getChallenge(R).call()
-                hashed_secret = int(hashlib.sha256(student['email'].encode()).hexdigest(), 16) % P
-                s = (r + challenge * hashed_secret) % (P-1)
+            # Perform Schnorr proof verification
+            hashed_email = hashlib.sha256(student['email'].encode()).hexdigest()
+            r = random.randint(1, 22)
+            R = pow(2, r, 23)
+            challenge = contract.functions.getChallenge(R).call()
+            hashed_secret = int(hashlib.sha256(student['email'].encode()).hexdigest(), 16) % 23
+            s = (r + challenge * hashed_secret) % 22
 
-                # Call unified verification on blockchain (includes Schnorr and VC verification)
-                tx_hash = contract.functions.verify(
-                    R, s, G, P, challenge, hashed_email, token_data[str(student_index)]['verifiablePresentation']['verifiableCredential'][0]['hash'], student_did, ipfs_vc
-                ).transact({'from': w3.eth.accounts[2], 'gas': 20000000})
-                
-                proof_verified = True  # Mark proofVerified as True after the first Schnorr verification
+            # Gas used for Schnorr proof verification
+            tx_hash_schnorr = contract.functions.verifySchnorrProof(
+                R, s, 2, 23, challenge, hashed_email, student_did
+            ).transact({'from': w3.eth.accounts[5], 'gas': 20000000})
+            
+            receipt_schnorr = w3.eth.wait_for_transaction_receipt(tx_hash_schnorr)
+            schnorr_gas_used = receipt_schnorr['gasUsed']
+            total_gas_used_schnorr += schnorr_gas_used
 
-            else:
-                # Skip Schnorr, only verify the hashed VC
-                tx_hash = contract.functions.verifyHashedVC(
-                    token_data[str(student_index)]['verifiablePresentation']['verifiableCredential'][0]['hash'], student_did, ipfs_vc
-                ).transact({'from': w3.eth.accounts[2], 'gas': 20000000})
+            # Perform VC verification
+            tx_hash_vc = contract.functions.verifyHashedVC(
+                token_data[str(student_index)]['verifiablePresentation']['verifiableCredential'][0]['hash'],
+                student_did,
+                ipfs_vc
+            ).transact({'from': w3.eth.accounts[5], 'gas': 20000000})
 
-            receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+            receipt_vc = w3.eth.wait_for_transaction_receipt(tx_hash_vc)
+            vc_gas_used = receipt_vc['gasUsed']
+            total_gas_used_vc += vc_gas_used
 
-            if receipt['status'] == 1:
+            if receipt_vc['status'] == 1:
                 valid_students.append({
                     "student_did": student_did,
                     "status": "verified and VC valid"
@@ -121,7 +126,9 @@ def batch_verify_from_json():
         return jsonify({
             "status": "success",
             "valid_students": valid_students,
-            "verification_time": verification_time
+            "verification_time": verification_time,
+            "total_gas_used_schnorr": total_gas_used_schnorr,
+            "total_gas_used_vc": total_gas_used_vc
         })
 
     except Exception as e:
