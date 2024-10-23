@@ -1,0 +1,22 @@
+{
+    "1": {
+        "student_did": "did:university:student1",
+        "hashed_vc": "6d282466dcbac8ca391ac41e537c8dd7c111aab7806eff6dbbfbed137b2ca74f"
+    },
+    "2": {
+        "student_did": "did:university:student2",
+        "hashed_vc": "3e8f0bc00ba1f2241c8d2aef638c4136c24bdaaf0f83c9125b0192d055c3199f"
+    },
+    "3": {
+        "student_did": "did:university:student3",
+        "hashed_vc": "d01e85fc37b26ae5b40a804a5dae743da9ea1b0f3bc1df03287574e36df6524e"
+    },
+    "4": {
+        "student_did": "did:university:student4",
+        "hashed_vc": "12b209e964ffbb6fb2a77a38c2542ebd6f08d5408fbabd69ff07b5a330df6be1"
+    },
+    "5": {
+        "student_did": "did:university:student5",
+        "hashed_vc": "2aeda3656506faa5eef740ff14476d4c72bca163308056ede59937c4ff96f506"
+    }
+}
