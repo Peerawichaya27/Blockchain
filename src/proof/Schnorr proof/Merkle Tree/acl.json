@@ -1,0 +1,34 @@
+{
+    "students": [
+        {
+            "student_did": "did:university:student1",
+            "employer_hashed_email": "f54f9d4e74651ee192d3f6b8ec424673d3d032e0dcd58b72f2f6885ad435f74c",
+            "expiration": 1729852816,
+            "isValid": true
+        },
+        {
+            "student_did": "did:university:student2",
+            "employer_hashed_email": "362fb47d87a6de1f4946f6c1550eb0f2aba56fca0013be1a3095a9c74fee4bda",
+            "expiration": 1729852816,
+            "isValid": true
+        },
+        {
+            "student_did": "did:university:student3",
+            "employer_hashed_email": "e2fe3045a3d9d75ddc1fa9114431d31dc79875d13e62e529c56cd42bf52d2180",
+            "expiration": 1729852816,
+            "isValid": true
+        },
+        {
+            "student_did": "did:university:student4",
+            "employer_hashed_email": "38f088f3e029fdf766266eabac8888ad2b7094c10820e42fa1d934d0d8be5e47",
+            "expiration": 1729852816,
+            "isValid": true
+        },
+        {
+            "student_did": "did:university:student5",
+            "employer_hashed_email": "b1fd9487ec06b9e2251d27c3ceb7e7a0add88f949a85428983b3c881ba576256",
+            "expiration": 1729852816,
+            "isValid": true
+        }
+    ]
+}

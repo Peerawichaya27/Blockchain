@@ -1,12 +1,18 @@
 import json
 import hashlib
 import random
+from datetime import datetime, timedelta
 
 student_did_li = []
 
 # Function to generate ACL entries
 def generate_acl(num_entries):
     acl_list = []
+
+    # Get the current time and add 2 days (in seconds)
+    current_time = datetime.now()
+    expiration_time = current_time + timedelta(days=2)
+    expiration_timestamp = int(expiration_time.timestamp())  # Convert to Unix timestamp
 
     for i in range(num_entries):
         # Generate student DID in the format did:university:studentXXX
@@ -17,7 +23,7 @@ def generate_acl(num_entries):
         acl_entry = {
             "student_did": student_did,
             "employer_hashed_email": hashed_email,
-            "expiration": 1687581600 + i * 1000,  # Example expiration times (incremented)
+            "expiration": expiration_timestamp,  # Set expiration to current + 2 days
             "isValid": True
         }
 
@@ -28,7 +34,7 @@ def generate_acl(num_entries):
     with open('acl.json', 'w') as acl_file:
         json.dump({"students": acl_list}, acl_file, indent=4)
 
-    print(f"{num_entries} ACL entries successfully created and stored in acl.json.")
+    print(f"{num_entries} ACL entries successfully created and stored in acl.json with expiration in 2 days.")
 
 # Function to create a batch verification payload
 def create_batch_verification_payload(num_entries):

@@ -10,7 +10,7 @@
   "issuer": "did:university:issuer123",
   "issuanceDate": "2024-09-25T19:23:24Z",
   "credentialSubject": {
-      "id": "did:university:student123",
+      "id": "did:university:student1",
       "name": "John Doe"
   },
   "proof": {
