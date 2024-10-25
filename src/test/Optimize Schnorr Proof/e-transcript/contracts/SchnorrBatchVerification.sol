@@ -9,47 +9,42 @@ contract SchnorrSingleVerification {
         uint256 c;
     }
 
-    uint256 public precomputedGHashedEmail; // Precomputed g^hashed_email mod p stored as a state variable
-    uint256 public constant G = 2; // Fixed generator
-    uint256 public constant P = 23; // Fixed prime modulus
+    uint256 public precomputedGHashedEmail; // Stores g^hashed_email mod p for reuse
+    uint256 constant G = 2; // Hardcoded generator constant
+    uint256 constant P = 23; // Hardcoded prime modulus constant
 
-    // Function to precompute g^hashed_email mod p and store it if not already set
-    function setPrecomputedGHashedEmail(uint256 hashedEmail) external {
+    // Sets precomputed value for g^hashed_email mod p once, if it hasn't been set already
+    function setPrecomputedGHashedEmail(uint256 hashedEmail) public {
         if (precomputedGHashedEmail == 0) {
             precomputedGHashedEmail = modExp(G, hashedEmail, P);
         }
     }
 
-    // Function to generate a challenge based on commitment R
-    function getChallenge(uint256 R) external pure returns (uint256) {
-        // Using modulo P directly here saves recalculation
+    // Generate a challenge using R, mod P to keep the result small
+    function getChallenge(uint256 R) public pure returns (uint256) {
         return uint256(keccak256(abi.encodePacked(R))) % P;
     }
 
-    // Function to verify a single Schnorr proof using the stored precomputed value
-    function verifySchnorrProof(SchnorrProof memory proofData) external view returns (bool) {
-        require(precomputedGHashedEmail != 0, "Precomputed value not set");
+    // Optimized verification using precomputed value
+    function verifySchnorrProof(SchnorrProof memory proofData) public view returns (bool) {
+        uint256 lhs = modExp(G, proofData.s, P); // Compute g^s mod p
+        uint256 rhs = mulmod(proofData.R, modExp(precomputedGHashedEmail, proofData.c, P), P); // Compute R * (precomputedGHashedEmail)^c mod p
 
-        // g^s mod p
-        uint256 lhs = modExp(G, proofData.s, P);
-
-        // R * (precomputedGHashedEmail)^c mod p
-        uint256 rhs = mulmod(proofData.R, modExp(precomputedGHashedEmail, proofData.c, P), P);
-
+        // Check if left side equals the right side
         return lhs == rhs;
     }
 
-    // Optimized modular exponentiation using the square-and-multiply method
+    // Optimized modular exponentiation with binary exponentiation for efficient gas usage
     function modExp(uint256 base, uint256 exp, uint256 mod) internal pure returns (uint256) {
         uint256 result = 1;
-        base = base % mod;
+        base %= mod; // Take base mod once at the start
 
         while (exp > 0) {
-            if (exp & 1 == 1) {
-                result = mulmod(result, base, mod);  // result = (result * base) % mod
+            if (exp & 1 == 1) { // If exp is odd
+                result = mulmod(result, base, mod);
             }
-            base = mulmod(base, base, mod);  // base = (base * base) % mod
-            exp >>= 1;
+            base = mulmod(base, base, mod);
+            exp >>= 1; // Divide exp by 2
         }
         return result;
     }
