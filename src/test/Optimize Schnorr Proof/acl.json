@@ -1,0 +1,10 @@
+{
+    "students": [
+        {
+            "student_did": "did:university:student1",
+            "employer_hashed_email": "337ac7c6c2d2d9904c7b96f39a255ee4cc60d74811b7631010fdeea7da993268",
+            "expiration": 1687581600,
+            "isValid": true
+        }
+    ]
+}

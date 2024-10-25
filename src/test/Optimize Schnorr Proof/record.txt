@@ -1,0 +1,30 @@
+contract gas = 357,832
+proof gas = 31,814
+
+Batch Verification Time for Traditional Schnorr Proof in Seconds:
+    1 proof = 0.05599832534790039 | 31,814 gas
+    10 proof = 0.4621245861053467 | 301,803 gas
+    50 proof = 2.0600359439849854 | 1,524,439 gas
+    100 proof = 3.8963069915771484 | 3,058,513 gas
+    250 proof = 9.282909154891968 | 7,634,312 gas
+    500 proof = 18.224509716033936 | 15,281,417 gas
+    1000 proof = 35.882033586502075 | 30,532,294 gas
+
+Batch Verification Time for Optimize Schnorr Proof in Seconds
+    1 proof = 0.03300166130065918 | 107,967 gas
+    10 proof = 0.3492586612701416 | 348,874 gas
+    50 proof = 1.6347029209136963 | 1,421,222 gas
+    100 proof = 3.165285110473633 | 2,754,290 gas
+    250 proof = 7.619167804718018 | 6,762,592 gas
+    500 proof = 14.966943502426147 | 13,444,871 gas
+    1000 proof = 31.112386465072632 | 26,789,637 gas
+
+
+Verification Time for RSA Employer's Proof in Sec:
+    1 ver = 0.0070
+    10 ver = 0.0390
+    50 ver = 0.1670
+    100 ver = 0.3309
+    250 ver = 0.8247
+    500 ver = 1.6783
+    1000 ver = 3.2793

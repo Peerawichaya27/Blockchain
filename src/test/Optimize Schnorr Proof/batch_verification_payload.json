@@ -1,0 +1,8 @@
+{
+    "students": [
+        {
+            "email": "hr1@gmail.com",
+            "student_did": "did:university:student1"
+        }
+    ]
+}
