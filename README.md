@@ -30,7 +30,7 @@ The EV-Transcript system consists of the following components:
 
  5) <strong>Blockchain:</strong> Stores metadata and IPFS indices for secure credential access.
 
- 6) <strong>IPFS:</strong> Stores hashed VCs and DID documents, ensuring decentralized, tamper-proof storage.
+ 6) <strong>IPFS:</strong> Stores hashed VCs and DID of students, ensuring decentralized, tamper-proof storage.
 
  7) <strong>VP & Token Generator:</strong> Produces Verifiable Presentations (VPs) and tokens for credential sharing.
 
