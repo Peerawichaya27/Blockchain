@@ -14,7 +14,7 @@ The EV-Transcript system is an advanced, blockchain-based solution for managing 
 
  - <strong>Optimized Schnorr Proof:</strong> Employs an optimized Schnorr protocol for privacy-preserving authentication between employers and the verification system via smart contracts.
 
- - <strong>Access Control Mechanisms:</strong> Verifiable Presentations (VPs) allow students to selectively share transcript data, with full control over access rights and duration.
+ - <strong>Access Control Mechanisms:</strong> Verifiable Presentations (VPs) allow students to selectively disclose transcript data, with full control over access rights and duration.
 
 # System Architecture
 
