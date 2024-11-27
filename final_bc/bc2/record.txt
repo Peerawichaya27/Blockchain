@@ -1,0 +1,61 @@
+contract gas = 357,832
+proof gas = 31,814
+
+Batch Verification Time for Schnorr Proof in Seconds:
+    1 proof = 0.056 | 31,814 gas
+    10 proof = 0.462 | 301,803 gas
+    50 proof = 2.060 | 1,524,439 gas
+    100 proof = 3.896 | 3,058,513 gas
+    250 proof = 9.283 | 7,634,312 gas
+    500 proof = 18.225 | 15,281,417 gas
+    1000 proof = 35.882 | 30,532,294 gas
+
+
+contract gas = 992,041
+hashed VC gas = 95,536
+
+Batch Verification Time for Merkle Tree in Seconds:
+    1 hashed VC = 0.118 | 127,350 gas 
+    10 hashed VC = 0.356 | 395,053 gas
+    50 hashed VC = 1.153 | 1,717,453 gas
+    100 hashed VC = 2.099 | 3,459,279 gas
+    250 hashed VC = 5.153 | 8,848,123 gas
+    500 hashed VC = 11.176 | 18,226,947 gas
+    1000 hashed VC = 21.792 | 37,607,831 gas
+
+
+contract gas = 1,000,892
+hashed vc gas = 27,643
+
+UnBatch Verification Time in Seconds:
+    1 proof = 0.128 | 59,457 gas
+    10 proof = 0.753 | 550,278 gas
+    50 proof = 3.147 | 2,877,674 gas
+    100 proof = 5.890 | 5,792,710 gas
+    250 proof = 13.636 | 14,513,159 gas
+    500 proof = 28.440 | 29,068,014 gas
+    1000 proof = 54.912 | 58,134,403 gas
+
+
+
+
+
+
+
+
+
+
+
+
+
+contract gas = 728,672
+proof gas = 154,937
+
+Batch Verification Time for Schnorr Proof in Seconds:
+    1 proof = 0.081 | 154,937 gas
+    10 proof = 0.623 | 1,345,577 gas
+    50 proof = 3.005 | 6,645,098 gas
+    100 proof = 5.928 | 13,252,345 gas
+    250 proof = 14.772 | 33,081,320 gas
+    500 proof = 29.227 | 66,164,849 gas
+    1000 proof = 58.517 | 132,330,626 gas

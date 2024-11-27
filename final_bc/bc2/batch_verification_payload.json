@@ -1,0 +1,44 @@
+{
+    "students": [
+        {
+            "email": "hr1@gmail.com",
+            "student_did": "did:university:student1"
+        },
+        {
+            "email": "hr2@gmail.com",
+            "student_did": "did:university:student2"
+        },
+        {
+            "email": "hr3@gmail.com",
+            "student_did": "did:university:student3"
+        },
+        {
+            "email": "hr4@gmail.com",
+            "student_did": "did:university:student4"
+        },
+        {
+            "email": "hr5@gmail.com",
+            "student_did": "did:university:student5"
+        },
+        {
+            "email": "hr6@gmail.com",
+            "student_did": "did:university:student6"
+        },
+        {
+            "email": "hr7@gmail.com",
+            "student_did": "did:university:student7"
+        },
+        {
+            "email": "hr8@gmail.com",
+            "student_did": "did:university:student8"
+        },
+        {
+            "email": "hr9@gmail.com",
+            "student_did": "did:university:student9"
+        },
+        {
+            "email": "hr10@gmail.com",
+            "student_did": "did:university:student10"
+        }
+    ]
+}
