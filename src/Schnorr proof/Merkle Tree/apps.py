@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Web3 setup
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545", request_kwargs={'timeout': 500}))
-contract_address = Web3.to_checksum_address('0x237421b1AbC20B15f8A33aA46135671f6fd0BBd3')  # Replace with your deployed contract address
+contract_address = Web3.to_checksum_address('0xE3305FB46Af3405AaD6ce744Ce750A282906ba88')  # Replace with your deployed contract address
 
 # Load the contract ABI
 with open('e-transcript/build/contracts/SchnorrBatchVerification.json') as f:
@@ -46,7 +46,7 @@ def store_did_to_index():
 
             # Call the smart contract function to store DID and index
             tx_hash = contract.functions.storeDidToIndex(student_did, student_index).transact({
-                'from': w3.eth.accounts[1], 'gas': 200000000
+                'from': w3.eth.accounts[0], 'gas': 200000000
             })
             # Wait for the transaction to be mined
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -168,7 +168,7 @@ def batch_verify_from_json():
             ipfs_merkle_root_bytes32, 
             vp_merkle_root_bytes32
         ).transact({
-            'from': w3.eth.accounts[1], 'gas': 200000000
+            'from': w3.eth.accounts[0], 'gas': 200000000
         })
         receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
         cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
@@ -176,23 +176,13 @@ def batch_verify_from_json():
         # Generate the Merkle Proof for each student
         for i, student in enumerate(students_data):
             # Get Merkle Proofs from both IPFS and VP trees
-            # merkle_proof_ipfs = get_merkle_proof(ipfs_merkle_tree, i)
             merkle_proof_vp = get_merkle_proof(vp_merkle_tree, i)
-
-            # # Verify IPFS proof on the blockchain
-            # tx_hash = contract.functions.verifyMerkleProof(
-            #     [bytes.fromhex(p) for p in merkle_proof_ipfs], 
-            #     bytes.fromhex(hashed_vcs_ipfs[i])
-            # ).transact({'from': w3.eth.accounts[0], 'gas': 200000000})
-
-            # receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
-            # cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
 
             # Verify VP proof on the blockchain
             tx_hash = contract.functions.verifyMerkleProof(
                 [bytes.fromhex(p) for p in merkle_proof_vp], 
                 bytes.fromhex(hashed_vcs_vp[i])
-            ).transact({'from': w3.eth.accounts[1], 'gas': 200000000})
+            ).transact({'from': w3.eth.accounts[0], 'gas': 200000000})
 
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
             cumulative_gas_used += receipt['gasUsed']  # Add the gas used for this transaction
