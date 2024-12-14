@@ -36,6 +36,16 @@ The EV-Transcript system consists of the following components:
 
  8) <strong>ZKP Schnorr Module:</strong> Generates and verifies Schnorr proofs to enable privacy-preserving verification.
 
+## textFile Directory
+The helper.txt is helping in using the truffle command.
+The requirements.txt is use for installing the necessary library.
+
+## ssi Directory
+The ssi directory that located in the src folder is storing the references of the files that related to the SSI, which including the DID document, VC, and VP.
+
+## test Directory
+The test directory that located in the src folder is storing the testing files that are necessary for the evaluation.
+
 ## Run the Test
 You can follow these steps below to Start our system.
 
