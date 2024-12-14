@@ -1,7 +1,3 @@
-uni.py -> account address
-abi.json -> contract address
-
-
 truffle:
 	npm install -g truffle				# install truffle
 
@@ -16,5 +12,3 @@ truffle:
 	truffle migrate --reset --network development	# reset the migration. Use when migrate again.
 
 	truffle console --network development		# open truffle console or terminal
-	
-	ETranscript deployed at address: 0xYourContractAddress	#
