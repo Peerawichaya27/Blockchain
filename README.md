@@ -46,7 +46,7 @@ The ssi directory that located in the src folder is storing the references of th
 ## test Directory
 The test directory that located in the src folder is storing the testing files that are necessary for the evaluation.
 
-## Run the Test
+# Run the Test
 You can follow these steps below to Start our system.
 
 Clone the project:
@@ -85,7 +85,7 @@ Go to the test directory:
   cd test
 ```
 
-## Batch Vs UnBatch
+# Batch Vs UnBatch
 This is going to test the Batch verification by using the Merkle Tree and the UnBatch verification that isn't use the Merkle Tree.
 
 Go to the Batch_vs_UnBatch directory:
@@ -282,7 +282,7 @@ Go to the path "/" on the URL and click the "batch_verify_json" button.
 Result:
 You will get the list of students who use the true vc and false vc.
 
-## Traditional Vs Optimize
+# Traditional Vs Optimize
 This is going to test the Traditional Schnorr Proof and the Optimize Schnorr Proof.
 
 Go to the Traditional_vs_Optimize directory:
