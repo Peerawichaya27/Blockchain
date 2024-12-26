@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash Storage and Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Hash Storage and Comparison</h1>
+
+    <div>
+        <h2>Store All Hashes Once</h2>
+        <button onclick="storeHashesOnce()">Store Hashes</button>
+        <p id="store-result"></p>
+    </div>
+
+    <div>
+        <h2>Compare Shuffled Subsets</h2>
+        <select id="compare-size">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+        </select>
+        <button onclick="compareShuffled()">Compare Subset</button>
+        <p id="compare-result"></p>
+    </div>
+
+    <script>
+        async function storeHashesOnce() {
+            document.getElementById("store-result").innerText = "Storing hashes...";
+            try {
+                const response = await axios.post(`/store_hashes_once`);
+                document.getElementById("store-result").innerText = response.data.message;
+            } catch (error) {
+                document.getElementById("store-result").innerText = "Error: " + error.response.data.error;
+            }
+        }
+
+        async function compareShuffled() {
+            const size = document.getElementById("compare-size").value;
+            document.getElementById("compare-result").innerText = "Comparing subset...";
+            try {
+                const response = await axios.post(`/compare_shuffled/${size}`);
+                const data = response.data;
+                if (data.match) {
+                    document.getElementById("compare-result").innerText = `${data.message} Time taken: ${data.time_taken.toFixed(4)} seconds.`;
+                } else {
+                    document.getElementById("compare-result").innerText = `Mismatch! Missing hashes: ${data.missing_hashes.join(", ")}. Time taken: ${data.time_taken.toFixed(4)} seconds.`;
+                }
+            } catch (error) {
+                document.getElementById("compare-result").innerText = "Error: " + error.response.data.error;
+            }
+        }
+    </script>
+</body>
+</html>
