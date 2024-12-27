@@ -30,4 +30,36 @@ contract HashStorage {
         Block storage blockData = blocks[_id];
         return (blockData.hashes, blockData.hashCount);
     }
+
+    // Check if a specific hash exists in any block
+    function hashExists(string memory _hash) public view returns (bool) {
+        for (uint i = 0; i < blockCount; i++) {
+            Block storage currentBlock = blocks[i];
+            for (uint j = 0; j < currentBlock.hashCount; j++) {
+                if (keccak256(abi.encodePacked(currentBlock.hashes[j])) == keccak256(abi.encodePacked(_hash))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // // Check if multiple hashes exist in the blockchain
+    // function hashesExist(string[] memory _hashes) public view returns (bool[] memory) {
+    //     bool[] memory results = new bool[](_hashes.length);
+    //     for (uint k = 0; k < _hashes.length; k++) {
+    //         results[k] = false;
+    //         for (uint i = 0; i < blockCount; i++) {
+    //             Block storage currentBlock = blocks[i];
+    //             for (uint j = 0; j < currentBlock.hashCount; j++) {
+    //                 if (keccak256(abi.encodePacked(currentBlock.hashes[j])) == keccak256(abi.encodePacked(_hashes[k]))) {
+    //                     results[k] = true;
+    //                     break;
+    //                 }
+    //             }
+    //             if (results[k]) break;
+    //         }
+    //     }
+    //     return results;
+    // }
 }

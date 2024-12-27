@@ -18,7 +18,7 @@ if not web3.is_connected():
 with open("blockchain/build/contracts/HashStorage.json", "r") as file:
     contract_data = json.load(file)
 
-contract_address = "0xF374A0736B7DB026eac7A06D013509D8D2a14953"  # Replace with your deployed contract address
+contract_address = "0x678e573a625d4fbbddC6D2C9a814e01D90D831c9"  # Replace with your deployed contract address
 contract = web3.eth.contract(address=contract_address, abi=contract_data["abi"])
 
 
@@ -68,17 +68,13 @@ def compare_shuffled(size):
         random.shuffle(shuffled_hashes)
         subset = shuffled_hashes[:size]
 
-        # Fetch all stored hashes from the blockchain
-        block_count = contract.functions.blockCount().call()
-        stored_hashes = []
-        for block_id in range(block_count):
-            block_hashes, hash_count = contract.functions.getBlock(block_id).call()
-            block_hashes = block_hashes[:hash_count]  # Slice to actual count
-            stored_hashes.extend(block_hashes)
-
-        # Compare each hash in the subset to the stored hashes
+        # Compare each hash using the smart contract
         start_time = time.time()
-        missing_hashes = [h for h in subset if h not in stored_hashes]
+        missing_hashes = []
+        for h in subset:
+            exists = contract.functions.hashExists(h).call()
+            if not exists:
+                missing_hashes.append(h)
         end_time = time.time()
 
         if missing_hashes:
